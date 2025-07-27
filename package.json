@@ -37,6 +37,7 @@
   "devDependencies": {
     "@ahmedbaset/config": "workspace:*",
     "@types/node": "^24.1.0",
+    "rollup": "^4.46.0",
     "tsdown": "^0.12.0",
     "typescript": "^5.8.2",
     "vite": "^6.3.5"

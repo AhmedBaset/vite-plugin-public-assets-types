@@ -5,6 +5,8 @@
 
 > A Vite plugin that scans your `public` directory and generates a TypeScript union type of all public asset paths.
 
+![alt text](image.png)
+
 ## Features
 
 - 🔍 Recursively reads all files in your `public` folder.
@@ -14,11 +16,11 @@
 ## Installation
 
 ```bash
+pnpm add -D vite-plugin-public-assets-types
+# or
 npm install --save-dev vite-plugin-public-assets-types
 # or
 yarn add -D vite-plugin-public-assets-types
-# or
-pnpm add -D vite-plugin-public-assets-types
 ```
 
 ## Usage
@@ -33,6 +35,9 @@ export default defineConfig({
   plugins: [
     publicAssetsPlugin({
       // options here (optional)
+      publicDir: "public",
+      output: "src/types/public-assets.ts",
+      variableName: "PublicAssets",
     }),
   ],
 });
