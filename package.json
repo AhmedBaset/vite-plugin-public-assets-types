@@ -12,9 +12,12 @@
       "default": "./dist/index.js"
     }
   },
+  "license": "MIT",
   "files": [
     "src",
     "dist",
+    "LICENSE",
+    "README.md",
     "package.json"
   ],
   "scripts": {
