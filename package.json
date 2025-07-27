@@ -1,0 +1,44 @@
+{
+  "name": "vite-plugin-public-assets-types",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "prepublishOnly": "pnpm build",
+    "build": "tsdown",
+    "type:check": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "pnpm -w format",
+    "test:unit": "vitest --run",
+    "test": "pnpm test:unit"
+  },
+  "keywords": [],
+  "author": "Ahmed Abdelbaset",
+  "peerDependencies": {
+    "vite": ">=6.0.0 || >=7.0.0"
+  },
+  "devDependencies": {
+    "@ahmedbaset/config": "workspace:*",
+    "@types/node": "^24.1.0",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vite": "^6.3.5"
+  },
+  "repository": {
+    "directory": "packages/vite-plugin-public-assets-types"
+  }
+}
