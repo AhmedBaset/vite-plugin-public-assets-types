@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-public-assets-types",
   "version": "0.1.0",
-  "description": "",
+  "description": "A Vite plugin to generate TypeScript types for public assets",
   "type": "module",
   "sideEffects": false,
   "main": "dist/index.js",
