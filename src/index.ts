@@ -1,5 +1,7 @@
 import type { Plugin } from "vite";
 import path from "node:path";
+import fsp from "node:fs/promises";
+import { existsSync } from "node:fs";
 
 interface Options {
   /**
@@ -40,15 +42,14 @@ function publicAssetsPlugin(options: Options = {}): Plugin {
   return {
     name: "vite-plugin-public-assets-types",
     enforce: "pre",
-    async buildStart(ctx) {
-      const fs = ctx.fs;
+    async buildStart() {
       const dir = path.resolve(process.cwd(), publicDir);
       const files: string[] = [];
 
       async function walk(current: string) {
-        for (const name of await fs.readdir(current)) {
+        for (const name of await fsp.readdir(current)) {
           const fullPath = path.join(current, name);
-          const stat = await fs.stat(fullPath);
+          const stat = await fsp.stat(fullPath);
           if (stat.isDirectory()) {
             await walk(fullPath);
           } else {
@@ -61,17 +62,7 @@ function publicAssetsPlugin(options: Options = {}): Plugin {
         }
       }
 
-      async function exists(file: string) {
-        try {
-          await fs.stat(file);
-          return true;
-        } catch (e) {
-          if ((e as { code?: string }).code === "ENOENT") return false;
-          throw e;
-        }
-      }
-
-      if (await exists(dir)) {
+      if (existsSync(dir)) {
         await walk(dir);
       }
 
@@ -92,10 +83,10 @@ function publicAssetsPlugin(options: Options = {}): Plugin {
 
       // Ensure the output directory exists
       const outDir = path.dirname(output);
-      await fs.mkdir(outDir, { recursive: true });
+      await fsp.mkdir(outDir, { recursive: true });
       // if the file has the region, replace only the region. Otherwise, append to the end of the file.
-      let content = (await exists(output))
-        ? await fs.readFile(output, { encoding: "utf8" })
+      let content = existsSync(output)
+        ? await fsp.readFile(output, { encoding: "utf8" })
         : "";
       if (content.includes(start) && content.includes(end)) {
         const startIndex = content.indexOf(start);
@@ -107,7 +98,7 @@ function publicAssetsPlugin(options: Options = {}): Plugin {
       } else {
         content += unionLines.join("\n");
       }
-      fs.writeFile(output, content);
+      fsp.writeFile(output, content);
     },
   };
 }
